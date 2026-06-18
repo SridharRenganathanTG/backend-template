@@ -1,0 +1,17 @@
+node_modules
+.env
+.claude
+.settings
+build
+dist
+coverage
+logs
+*.log
+*.tsbuildinfo
+pnpm-debug.log*
+.DS_Store
+.idea
+.vscode
+pnpm-lock.yaml
+yarn.lock
+package-lock.json
