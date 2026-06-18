@@ -1,21 +1,35 @@
-import { text } from 'drizzle-orm/pg-core';
-import { timestamp } from 'drizzle-orm/pg-core';
-import { uuid } from 'drizzle-orm/pg-core';
-import { pgTable } from 'drizzle-orm/pg-core';
+import {
+	date,
+	jsonb,
+	pgTable,
+	text,
+	timestamp,
+	uuid,
+} from 'drizzle-orm/pg-core';
+import { statusEnum, userTypeEnum } from './enum';
 
-export const users = pgTable(
-	'users',
-	{
-		id: uuid().primaryKey().defaultRandom(),
+export const users = pgTable('users', {
+	id: uuid().primaryKey().defaultRandom(),
 
-		name: text(),
+	name: text(),
 
-		email: text(),
+	email: text(),
 
-		phone: text(),
+	phone: text(),
 
-		createdAt: timestamp('created_at', { withTimezone: true })
-			.defaultNow()
-			.notNull(),
-	},
-);
+	role: userTypeEnum().default('customer'),
+
+	dateOfBirth: date(),
+	ageVerifiedAt: date(),
+
+	metadata: jsonb('metadata').$type<{
+		acceptedTermsAndConditions: boolean;
+		marketingOptIn: boolean;
+	}>(),
+
+	status: statusEnum().default('pending'),
+
+	createdAt: timestamp('created_at', { withTimezone: true })
+		.defaultNow()
+		.notNull(),
+});
